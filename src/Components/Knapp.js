@@ -1,10 +1,11 @@
 import React from 'react'
 
 const knapp  = (props) => {
+    
     return (
-            <div className="btn" onClick={props.change}>
+            <button disabled={false} className="btn" onClick={props.change}>
             {props.Letter}
-            </div> 
+            </button> 
     )
 }
 export default knapp

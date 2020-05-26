@@ -38,7 +38,7 @@ class App extends Component{
   }
 
   changeColor = (event) => {
-
+      event.target.disabled = true;
       event.target.style.backgroundColor = '#bdbdbd';
       const newCount = Number(this.state.number) + 1;
       this.setState({
@@ -72,7 +72,7 @@ class App extends Component{
       element : array
     });
   }
-  
+
   restartGame = () => {
     alert("Enought guesse , try again!");
     this.changeColorOffAllBTN();
