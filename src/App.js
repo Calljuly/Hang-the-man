@@ -17,7 +17,8 @@ class App extends Component{
       ,'s','u','v','w','x','y','z','å','ä','ö'],
       element: '',
       word: ['Jul', 'Ti', 'Sofia', 'Ulrika'],
-      newWord : ''
+      newWord : '',
+      number: 0
     };
   }
 
@@ -36,7 +37,14 @@ class App extends Component{
       });
   }
 
-  changeColor = (event) => {event.target.style.backgroundColor = '#bdbdbd'}
+  changeColor = (event) => {
+
+      event.target.style.backgroundColor = '#bdbdbd';
+      const newCount = Number(this.state.number) + 1;
+      this.setState({
+        number : newCount
+      });
+  }
 
   changeColorOffAllBTN = () => {
     let test = this.state.element.filter(element =>{
@@ -45,11 +53,12 @@ class App extends Component{
     test = test.map(element =>{
       return element.backgroundColor ='#ffc107';
     })
-    this.createNewWord();
+    this.createNewWord()
 
     this.setState({
       Loaded: true,
-    element : test
+      element : test,
+      number : 0
     });
   }
 
@@ -63,6 +72,11 @@ class App extends Component{
       element : array
     });
   }
+  
+  restartGame = () => {
+    alert("Enought guesse , try again!");
+    this.changeColorOffAllBTN();
+  }
 
   render()
   {
@@ -74,12 +88,16 @@ class App extends Component{
         Loaded: false
       });
     }
-    
+
+    if(this.state.number === 15){
+      {this.restartGame()}
+    }
+
     return (
         <div className="App">
         <Header></Header>
         <img id="hangedMan" src={Bild} alt="Man"></img>
-        <Guesses word={this.state.newWord}></Guesses>
+        <Guesses word={this.state.newWord} guess={this.state.number}></Guesses>
         <ContainerBTN knappar={this.state.element}></ContainerBTN>
         <MyBTN changeColor={this.changeColorOffAllBTN.bind(this)}></MyBTN>
         </div>

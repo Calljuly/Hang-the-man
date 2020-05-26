@@ -5,7 +5,7 @@ const guesses = (props) => {
     return (
         <div>
             <p>{props.word}</p>
-            <p>Antal gissningar : 0</p>
+            <p>Antal gissningar : {props.guess}</p>
         </div>
     )
 }
