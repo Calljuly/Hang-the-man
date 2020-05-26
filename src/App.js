@@ -21,7 +21,10 @@ class App extends Component{
       choosenWordArray : '',
       newWord : '',
       number: 0,
-      win : false
+      winOrLose : false,
+      mainText : 'Klicka på "Återställ" för att prova igen!',
+      header: 'Du förlorade!'
+
     };
   }
 
@@ -45,8 +48,7 @@ class App extends Component{
       this.changeColor(event);
       const word = this.state.choosenWordArray;
       const letter = event.target.value;
-      const a = word.includes(letter);
-      if(a)
+      if(word.includes(letter))
       {
         const index = word.indexOf(letter);
         const i = this.state.newWord;
@@ -58,7 +60,8 @@ class App extends Component{
 
         if(!this.state.newWord.includes('_ ')){
           this.setState({
-            win: true
+            winOrLose: true,
+            header: 'Well done!'
           })
         }
       }
@@ -85,7 +88,8 @@ class App extends Component{
       Loaded: true,
       element : test,
       number : 0,
-      win : false
+      winOrLose : false,
+      header : 'Du förlorade ! '
     });
   }
 
@@ -101,8 +105,9 @@ class App extends Component{
   }
 
   restartGame = () => {
-    alert("Enought guesse , try again!");
-    this.changeColorOffAllBTN();
+    this.setState({
+      winOrLose: true
+    })
   }
 
   render()
@@ -117,7 +122,10 @@ class App extends Component{
     }
 
     if(this.state.number === 15){
-      {this.restartGame()}
+      this.setState({
+        number: 0,
+        winOrLose: true
+      })    
     }
 
     return (
@@ -125,7 +133,7 @@ class App extends Component{
         <Header></Header>
         <img id="hangedMan" src={Bild} alt="Man"></img>
         <Guesses word={this.state.newWord} guess={this.state.number}></Guesses>
-        {this.state.win ? <Win />: null}
+        {this.state.winOrLose ? <Win headerText={this.state.header} mainText={this.state.mainText} />: null}
         <ContainerBTN knappar={this.state.element}></ContainerBTN>
         <MyBTN changeColor={this.changeColorOffAllBTN.bind(this)}></MyBTN>
         </div>
