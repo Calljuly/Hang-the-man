@@ -6,6 +6,7 @@ import Guesses from './Components/Guesses'
 import Knapp from './Components/Knapp'
 import ContainerBTN from './Components/ContainerBTN'
 import MyBTN from './Components/ButtonRender'
+import Win from './Components/Winning'
 
 class App extends Component{
   constructor(props){
@@ -14,11 +15,13 @@ class App extends Component{
     this.state = {
       Loaded : true,
       alfabet: ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r'
-      ,'s','u','v','w','x','y','z','å','ä','ö'],
+      ,'s','t','u','v','w','x','y','z','å','ä','ö'],
       element: '',
-      word: ['Jul', 'Ti', 'Sofia', 'Ulrika'],
+      word: ['jul', 'ti', 'sofia', 'ulrika'],
+      choosenWordArray : '',
       newWord : '',
-      number: 0
+      number: 0,
+      win : false
     };
   }
 
@@ -33,10 +36,33 @@ class App extends Component{
         return '_ ';
       })
       this.setState({
+        choosenWordArray: arrayOfLetters,
         newWord: result
       });
   }
 
+  checkIfLetterExsist = (event) => {
+      this.changeColor(event);
+      const word = this.state.choosenWordArray;
+      const letter = event.target.value;
+      const a = word.includes(letter);
+      if(a)
+      {
+        const index = word.indexOf(letter);
+        const i = this.state.newWord;
+        i[index] = letter;
+
+        this.setState({
+          newWord: i
+        })
+
+        if(!this.state.newWord.includes('_ ')){
+          this.setState({
+            win: true
+          })
+        }
+      }
+  }
   changeColor = (event) => {
       event.target.disabled = true;
       event.target.style.backgroundColor = '#bdbdbd';
@@ -58,14 +84,15 @@ class App extends Component{
     this.setState({
       Loaded: true,
       element : test,
-      number : 0
+      number : 0,
+      win : false
     });
   }
 
   createButtonsOfLetters  = () => {
     const array = this.state.alfabet.map((i, index) => 
       {
-          return <Knapp Letter={i} change={this.changeColor.bind(this)} key={index}></Knapp>
+          return <Knapp Letter={i} change={this.checkIfLetterExsist.bind(this)} key={index}></Knapp>
       });
 
     this.setState({
@@ -98,6 +125,7 @@ class App extends Component{
         <Header></Header>
         <img id="hangedMan" src={Bild} alt="Man"></img>
         <Guesses word={this.state.newWord} guess={this.state.number}></Guesses>
+        {this.state.win ? <Win />: null}
         <ContainerBTN knappar={this.state.element}></ContainerBTN>
         <MyBTN changeColor={this.changeColorOffAllBTN.bind(this)}></MyBTN>
         </div>
