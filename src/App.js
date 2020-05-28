@@ -17,7 +17,7 @@ class App extends Component{
       alfabet: ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r'
       ,'s','t','u','v','w','x','y','z','å','ä','ö'],
       element: '',
-      word: ['jul', 'ti', 'sofia', 'ulrika'],
+      word: ['garden', 'pear', 'orange', 'peach','cat', 'dog', 'horse'], 
       choosenWordArray : '',
       newWord : '',
       number: 0,
@@ -96,7 +96,10 @@ class App extends Component{
   createButtonsOfLetters  = () => {
     const array = this.state.alfabet.map((i, index) => 
       {
-          return <Knapp Letter={i} change={this.checkIfLetterExsist.bind(this)} key={index}></Knapp>
+          return <Knapp 
+          Letter={i} 
+          change={this.checkIfLetterExsist.bind(this)} 
+          key={index}></Knapp>
       });
 
     this.setState({
